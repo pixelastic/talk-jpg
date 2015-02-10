@@ -148,3 +148,14 @@ On passe donc plus de fois sur chaque élément, mais on affiche progressivement
 les détails, plutot que d'afficher ligne par ligne.
 
 
+
+
+
+
+## Sources
+
+http://www.impulseadventure.com/photo/jpeg-compression.html
+http://fr.wikipedia.org/wiki/JPEG#D.C3.A9coupage_en_blocs
+http://fr.wikipedia.org/wiki/Codage_de_Huffman
+http://www.ams.org/samplings/feature-column/fcarc-image-compression
+http://upload.wikimedia.org/wikipedia/commons/2/23/Dctjpeg.png
