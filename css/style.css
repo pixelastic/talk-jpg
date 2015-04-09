@@ -87,8 +87,18 @@ li {
 
 
 /* Specific slides */
-/* .slide-definition { */
-/*   background-image: url(../img/bg-definition.jpg); */
-/*   background-position:top left !important; */
-/*   background-size:100% 100% !important; */
-/* } */
+.slide-intro {
+  background-image: url(../img/bg-intro.jpg);
+  background-position:top left !important;
+  background-size:100% 100% !important;
+}
+.slide-metadata {
+  background-image: url(../img/bg-metadata.jpg);
+  background-position:top left !important;
+  background-size:100% 100% !important;
+}
+.slide-tools {
+  background-image: url(../img/bg-tools.jpg);
+  background-position:top left !important;
+  background-size:100% 100% !important;
+}
