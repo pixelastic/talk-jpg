@@ -1,0 +1,94 @@
+body {
+  font-family: "IntervalSansProRegular", Arial, sans-serif;
+  font-size: 30px;
+  font-weight: normal;
+  color: #FFFFFF;
+}
+a {
+  color:white;
+}
+/* Generic containers, setting same background color */
+.remark-container {
+  background-color: #002458;
+}
+.remark-slide-content {
+  background-color: #002458;
+  padding:0.5rem 2rem;
+  position:relative;
+}
+ /* Remove drop shadow */
+.remark-slide-scaler {
+  -webkit-box-shadow:none;
+  -moz-box-shadow:none;
+  box-shadow:none;
+}
+h1, h2, h3 {
+  font-family: "IntervalSansProSemiBold", Arial, sans-serif;
+  text-shadow: 2px 2px #00294c;
+  line-height: 1.3em;
+  margin: 0 0 20px 0;
+}
+ul, ol {
+  font-size:2rem;
+  width:90%;
+  margin:0 auto;
+}
+li {
+  padding-bottom:0.3em;
+}
+
+
+
+/* Full pages */
+.full-page {
+  text-align:center;
+  background-repeat: no-repeat;
+  background-size:100% !important;
+  /* background-position:center !important; */
+  vertical-align:middle;
+  text-align:center;
+}
+.full-page h1 {
+  color:#FFFFFF;
+  font-size:5rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.25);
+}
+
+/* Centered slide */
+.content-centered {
+  vertical-align:middle;
+  position:relative;
+}
+.content-centered h1 {
+  position:absolute;
+  top:0.5rem;
+  left:2rem;
+  right:2rem;
+}
+.content-centered ul, .content-centered ol {
+  width:80%;
+  margin:0 auto;
+}
+
+/* Columns */
+.column-right {
+  float:right;
+  width:50%;
+}
+.column-left {
+  float:left;
+  width:50%;
+}
+
+/* Checklists */
+.checklist li {
+  list-style:none;
+}
+
+
+/* Specific slides */
+/* .slide-definition { */
+/*   background-image: url(../img/bg-definition.jpg); */
+/*   background-position:top left !important; */
+/*   background-size:100% 100% !important; */
+/* } */

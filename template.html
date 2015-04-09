@@ -1,0 +1,35 @@
+<!doctype html>
+<html class="no-js" lang="en-us">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Anatomie d'un JPG</title>
+    <meta name="description" content="Remember">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <link rel="stylesheet" href="./css/remark.css">
+    <link rel="stylesheet" href="./css/table.css">
+    <link rel="stylesheet" href="./css/fonts.css">
+    <link rel="stylesheet" href="./css/code.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="shortcut icon" href="./favicon.ico">
+  </head>
+
+  <body>
+    <textarea id="source">
+      INSERT-SLIDES-HERE
+    </textarea>
+    <script src="./js/remark-latest.min.js"></script>
+    <script>
+      var slideshow = remark.create();
+
+      // remove basic reveal styles
+      (function($) {
+        var head = $('head')[0];
+        var style = $('head style[title=remark]')[0];
+        head.removeChild(style);
+      })(document.querySelectorAll.bind(document));
+    </script>
+  </body>
+
+</html>

@@ -9,6 +9,7 @@ Mais est-ce que que vous savez bien à quoi elles correspondent ?
 
 [!Image d'un panel photoshop avec plusieurs options]
 
+---
 ## Stockage naïf
 
 Prenons une image JPG en exemple. Celle-ci fait 250x375 pixels. Ça fait très
@@ -28,6 +29,7 @@ bytes. Oui sauf que là je vois bien sur mon disque qu'elle n'en pèse que
 
 Comment ça se fait ?
 
+---
 ## Différentes méthodes
 
 Le format JPG utilise plusieurs techniques pour enregistrer vos pixels dans un
@@ -41,6 +43,7 @@ quoi chacune des options du panel de Photoshop influe.
 La logique principale des différentes techniques de compression est d'essayer
 de faire ressortir des redondances d'informations, afin de les supprimer.
 
+---
 ## Découpons notre image en blocs 8x8
 
 On commence par découper notre image en blocs de 8x8 pixels. Si jamais un bloc
@@ -53,6 +56,7 @@ On va ensuite effectuer une compression sur chacun des blocs, séparément, avan
 de tous les regrouper ensemble. C'est cette première décomposition qui donne
 l'effet de quadrillage sur les fichiers JPG qui sont trop compressés.
 
+---
 ## Étudions un bloc
 
 Quand on regarde un bloc de 8x8 individuellement, on se rends compte que les
@@ -78,6 +82,7 @@ teintes, nos optimisations vont porter particulièrement sur ceux-ci.
 Rapellez-vous, on souhaite mettre en avant les redondances, afin de les
 supprimer.
 
+---
 ## Conversion RGB -> YCbCr
 
 Nous avons vu qu'une manière simple d'encoder la couleur d'un pixel est avec le
@@ -100,6 +105,7 @@ Encore une fois, qu'est-ce qu'on souhaite mettre en avant ? Les redondances. Et
 là on voit que d'un pixel au suivant les valeurs de Cb/Cr restent les mêmes. Il
 y a donc moyen d'optimiser à cet endroit.
 
+---
 ## Subsampling
 
 Si on ne regarde que les valeurs Cb (ou Cr) pour notre bloc, on voit que des
@@ -123,6 +129,7 @@ vous voyez dans le menu de Photoshop
 Ok, on a fait tout ce qu'on pouvait faire sur les pixels de manière
 individuels. Maintenant on va s'attaquer à notre bloc dans son ensemble.
 
+---
 ## DCT 
 
 Maintenant, on va s'attaquer à la partie la plus complexe de la compression.
@@ -151,6 +158,7 @@ sous le capot ce qu'on appelle une DCT (Discrete Cosine Transform), et on
 stocke donc les coefficients comme des `cosinus`, ce qui peut induire quelques
 erreurs d'arrondi. Ceux-ci restent néanmoins négligeables.
 
+---
 ## Quantification
 
 On a donc réussi à représenter un bloc en 3 suites de 64 entiers (un pour Y, un
@@ -186,6 +194,7 @@ implémentation, chaque outil, chaque appareil photo utilise à priori une table
 différente. Cette table n'est absolument pas standard et est stockée
 directement dans l'image JPG finale.
 
+---
 ## Compression de zeros
 
 On se retrouve donc avec notre suite de coefficient simplifiée, qui se retrouve
@@ -195,6 +204,7 @@ est forte, plus on va se retrouver avec beaucoup de zero.
 Ici, plutot que de noter 36 fois zero à la suite, on va simplement encoder le
 nombre de zero, ce qui prends moins de place.
 
+---
 ## Fin du bloc
 
 Et voila, on en a fini avec notre bloc.
@@ -202,6 +212,7 @@ Et voila, on en a fini avec notre bloc.
 On est passé de 64 pixels en RGB à 3 suites de coefficients (Y,Cb,Cr), en
 passant par plusieurs processus de compression, lossy et lossles, en route.
 
+---
 ## Autres blocs
 
 Maintenant, on va faire la même chose pour les autres blocs de l'image. On va
@@ -213,6 +224,7 @@ coder le coefficient du premier vecteur (le plus fort, celui qui donne la
 teinte principale), on va le coder en delta du coefficient du premier vecteur
 du bloc précédent.
 
+---
 ## Huffman encoding
 
 Une fois qu'on a effectué ce travail sur tous les blocs de notre image, il nous
@@ -231,6 +243,7 @@ un "mot" est présent très souvent, on l'encode finalement simplement en une
 lettre et on stocke le dictionnaire qui permet de faire la traduction dans
 l'image.
 
+---
 ## Conclusion
 
 Et c'est fini ! On a donc opéré plusieurs transformations sur notre data
@@ -242,6 +255,7 @@ On a aussi opéré des modifications spécifiquement adaptées à l'œil humain 
 va consommer ces images, en supprimant les informations qui ne seront de toutes
 façons pas perçues.
 
+---
 ## Décompression
 
 Maintenant, quand notre navigateur souhaite décompresser une image JPG pour
@@ -261,6 +275,7 @@ et passer au bloc suivant. Puis il repasse sur chaque bloc pour afficher les
 X vecteurs suivants, et ainsi de suite. Cela donne une affichage progressif,
 mais coute plus de tours de CPU (négligeable aujourd'hui).
 
+---
 ## Sources
 
 http://www.impulseadventure.com/photo/jpeg-compression.html

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+rsync \
+  --recursive \
+  --verbose \
+  --archive \
+  --update \
+  --delete \
+  --prune-empty-dirs \
+  --compress \
+  ./css ./fonts ./img ./js ./index.html \
+  pixelastic:/var/www/pixelastic.com/talks.pixelastic.com/dist/jpg-octo-bof

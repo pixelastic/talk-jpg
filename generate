@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+sed -e '/SLIDES/{r slides.md' -e 'd}' template.html > index.html
+

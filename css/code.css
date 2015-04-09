@@ -1,0 +1,41 @@
+/* Code */
+code {
+  font-family: Menlo, Monaco, "Courier New", monospace;
+  padding: .25em .5em;
+  font-weight:bold;
+  color: #BF616A;
+  background-color: #F9F9F9;
+}
+code strong {
+  background:yellow;
+}
+/* Code blocks */
+pre {
+  font-family: Menlo, Monaco, "Courier New", monospace;
+  margin:0 0 1em 0;
+}
+pre code {
+  font-weight:normal;
+}
+.hljs-default .hljs {
+  background:#121212;
+  color: #D0D0D0;
+}
+.hljs-default .hljs-string {
+  color:#5f87af;
+}
+.hljs-default .hljs-keyword {
+  color:#ff5f5f;
+  font-weight:normal;
+}
+.hljs-default .hljs-title {
+  color:#00AF5F;
+  font-weight:normal;
+}
+.hljs-default .hljs-regexp {
+  color:#005F87;
+  font-weight:normal;
+}
+
+
+
