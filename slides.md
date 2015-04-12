@@ -1,5 +1,28 @@
 class: full-page, slide-intro
 # Anatomie d'un JPG
+---
+class: content-centered
+# Why a talk about JPEG ?
+- Webperf is a hot topic for us
+- JPEG comes from the 90's
+- Still widely used today
+
+---
+class: content-centered
+# JPEG : historique
+- **J**oint **P**hotographic **E**xperts **G**roup produced the standard *Information technology – Digital compression and coding of continuous-tone still images*
+- Started in 1986, published in 1992 (approved by ISO and ITU)
+- Image compression method
+- File format: **J**peg **F**ile **I**nterchange **F**ormat (JFIF)
+
+---
+class: content-centered
+# More than half of the page payload today
+.center[
+  ![Transfer payload](./img/TotalSize.png)
+  ![Image payload](./img/ImgSize.png)
+]
+- ![Source](http://httparchive.org/trends.php?s=All&minlabel=Jun+1+2011&maxlabel=Apr+1+2015#bytesImg&reqImg)
 
 ---
 class: content-centered
@@ -32,7 +55,20 @@ class: content-centered
 
 ---
 class: content-centered
-# Différentes méthodes
+# Une combinaison de méthodes
+
+- Compression sans perte (*lossless*)
+-- Techniques issues de la théorie de l'information (Shannon, 1948)
+--- Huffman Coding
+--- Differential coding
+-- Techniques d'algèbre linéaire
+--- Karhunen Loève Transform (KLT)
+--- Discrete Cosine Transform
+- Compression avec perte (*lossy*)
+-- Techniques psychovisuelles
+--- RGB --> YCrCb
+--- Quantification empirique
+
 
 - Changement d'unités
 - Faiblesse de l'œil humain
