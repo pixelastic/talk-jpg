@@ -18,7 +18,7 @@ class: content-centered
 ---
 class: content-centered
 # Images : >50% du payload
-.column-right[
+.center[
   ![Image payload](./img/img_to_transfer_size.png)
 
   [source](http://httparchive.org/trends.php?s=All&minlabel=Jun+1+2011&maxlabel=Apr+1+2015#bytesImg&reqImg)
@@ -115,20 +115,13 @@ class: content-centered
   ![Zoom](./img/example-block-zoom.jpg)
 ]
 
- 
-
-- Pixels contigus similaires
-- 8x8 c'est petit
-- Chaque pixel est quasi-identique à son voisin
-- Aplats de couleur fréquents sur les photos
-- Chaque bloc a une teinte dominante
+- 8x8 c'est petit avec les résolutions actuelles
 - Redondance de teinte entre les blocs voisins
-- Bon compromis de taille entre localité et performances [à l'époque](http://www.faqs.org/faqs/mpeg-faq/part3/)
-
+- [Bon compromis](http://www.faqs.org/faqs/mpeg-faq/part3/) de taille entre localité et performances [à l'époque]
 
 ---
 class: content-centered
-## Encodage et décodage
+# Encodage et décodage
 
 .center[
   ![Diagramme de flux](./img/500px-JPEG_process.svg.png)
