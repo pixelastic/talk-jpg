@@ -46,7 +46,9 @@ class: content-centered
 .center[
   ![Example 400x268](./img/example-400.jpg)
 ]
+
  
+
 - 400 x 268 = 107 200px
 - RGB = 3 bytes
 - 321 600 ≠ 111 858 ≠ 9 412
@@ -77,12 +79,14 @@ class: content-centered
 class: content-centered
 # Bloc de 8x8
 
-// TODO: Notre image découpée en blocs de 8x8
+.center[
+  ![Blocs 8x8](./img/example-400-grid.jpg)
+]
 
-- Padding avec du blanc
+ 
+
 - Compression sur chaque bloc
-- Puis regroupage
-- Artefacts visibles à l'œil nu sur les blocs
+- Artefacts visibles à l'œil nu
 
 ---
 class: content-centered
