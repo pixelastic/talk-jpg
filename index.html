@@ -41,7 +41,7 @@ class: content-centered
   ![Transfer payload](./img/TotalSize.png)
   ![Image payload](./img/ImgSize.png)
 ]
-- ![Source](http://httparchive.org/trends.php?s=All&minlabel=Jun+1+2011&maxlabel=Apr+1+2015#bytesImg&reqImg)
+[source](http://httparchive.org/trends.php?s=All&minlabel=Jun+1+2011&maxlabel=Apr+1+2015#bytesImg&reqImg)
 
 ---
 class: content-centered
@@ -77,22 +77,33 @@ class: content-centered
 # Une combinaison de méthodes
 
 - Compression sans perte (*lossless*)
+
+    Techniques issues de la théorie de l'information (Shannon, 1948)
+
+    Algèbre linéaire
+
+- Compression avec perte (*lossy*)
+
+    Techniques psychovisuelles
+    
+    Quantification
+
+---
+class: content-centered
+# Test 
+- Changement d'unités
+- Faiblesse de l'œil humain
+- Zip classique
+- Recherche de redondances
 -- Techniques issues de la théorie de l'information (Shannon, 1948)
 --- Huffman Coding
 --- Differential coding
 -- Techniques d'algèbre linéaire
 --- Karhunen Loève Transform (KLT)
 --- Discrete Cosine Transform
-- Compression avec perte (*lossy*)
 -- Techniques psychovisuelles
 --- RGB --> YCrCb
 --- Quantification empirique
-
-
-- Changement d'unités
-- Faiblesse de l'œil humain
-- Zip classique
-- Recherche de redondances
 
 ---
 class: content-centered
@@ -239,53 +250,73 @@ class: full-page, slide-metadata
 class: content-centered
 # Trois formats
 
+// TODO : un output d'exiftool
+
 - Exif
 - IPTC
 - XMP
 
 ---
 class: content-centered
-# EXIF
+# EXIF (1995)
 
-- Infos techniques sur la photo
-- Flash, resolution, iso
-- Marque de l'appareil
-- Thumbnail
-- Whitelist
-
----
-class: content-centered
-# IPTC
-
-- Informations subjectives
-- Auteur, description, license
-- Whitelist partagée entre images, audio, video
+- **EX**changeable **I**mage **F**ile
+- Lors de la prise de photo
+- Informations techniques
+- 64kb max, no UTF-8, no timezone
 
 ---
 class: content-centered
-# XMP
+# IPTC (1990)
 
-- XML
-- UTF8
-- Multilangue
-- Tags standards (Dublin Core)
-- Extensible (trop?)
+.center[
+  ![IPTC](./img/iptc.gif)
+]
+
+ 
+
+- **I**nternational **P**ress **T**elecommunications **C**ouncil
+- **I**nformation **I**nterchange **M**odel
+- Texte, audio, video, images, etc
+- Auteur, copyright, description, etc
+- Deprecated
+
+---
+class: content-centered
+# XMP (2001)
+
+.center[
+  ![XMP](./img/xmp.png)
+]
+
+ 
+
+- e**X**tensible **M**etadata **P**latform
+- EXIF + IPTC en XML
+- Extensible, UTF-8, i18n
+- Support faible
 
 ---
 class: content-centered
 # Fragmentation
 
-- Info dupliquée 3 fois
-- Info potentiellement différente 3 fois
-- Support limité de XMP
+- Info dupliquée
+- Reconciliation
+- Support limité
 - Tags propriétaires
 
 ---
 class: content-centered
 # Compression
 
-- Reconciliation
 - Suppression aggressive
+- Garder auteur, license
+
+ 
+
+```shell
+jpegtran -optimize -copy none file.jpg
+```
 
 ---
 class: full-page, slide-tools
@@ -295,8 +326,8 @@ class: full-page, slide-tools
 class: content-centered
 # Outils
 
-- exiftool
-- jpegtran -optimize copy none
+// TODO ajouter ces outils directement au fil de la présentation ?
+
 - jpegoptim -m80 --strip-all
 - cjpeg-dssim jpegoptim
 

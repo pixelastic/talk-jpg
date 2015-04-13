@@ -231,53 +231,73 @@ class: full-page, slide-metadata
 class: content-centered
 # Trois formats
 
+// TODO : un output d'exiftool
+
 - Exif
 - IPTC
 - XMP
 
 ---
 class: content-centered
-# EXIF
+# EXIF (1995)
 
-- Infos techniques sur la photo
-- Flash, resolution, iso
-- Marque de l'appareil
-- Thumbnail
-- Whitelist
-
----
-class: content-centered
-# IPTC
-
-- Informations subjectives
-- Auteur, description, license
-- Whitelist partagée entre images, audio, video
+- **EX**changeable **I**mage **F**ile
+- Lors de la prise de photo
+- Informations techniques
+- 64kb max, no UTF-8, no timezone
 
 ---
 class: content-centered
-# XMP
+# IPTC (1990)
 
-- XML
-- UTF8
-- Multilangue
-- Tags standards (Dublin Core)
-- Extensible (trop?)
+.center[
+  ![IPTC](./img/iptc.gif)
+]
+
+ 
+
+- **I**nternational **P**ress **T**elecommunications **C**ouncil
+- **I**nformation **I**nterchange **M**odel
+- Texte, audio, video, images, etc
+- Auteur, copyright, description, etc
+- Deprecated
+
+---
+class: content-centered
+# XMP (2001)
+
+.center[
+  ![XMP](./img/xmp.png)
+]
+
+ 
+
+- e**X**tensible **M**etadata **P**latform
+- EXIF + IPTC en XML
+- Extensible, UTF-8, i18n
+- Support faible
 
 ---
 class: content-centered
 # Fragmentation
 
-- Info dupliquée 3 fois
-- Info potentiellement différente 3 fois
-- Support limité de XMP
+- Info dupliquée
+- Reconciliation
+- Support limité
 - Tags propriétaires
 
 ---
 class: content-centered
 # Compression
 
-- Reconciliation
 - Suppression aggressive
+- Garder auteur, license
+
+ 
+
+```shell
+jpegtran -optimize -copy none file.jpg
+```
 
 ---
 class: full-page, slide-tools
@@ -287,8 +307,8 @@ class: full-page, slide-tools
 class: content-centered
 # Outils
 
-- exiftool
-- jpegtran -optimize copy none
+// TODO ajouter ces outils directement au fil de la présentation ?
+
 - jpegoptim -m80 --strip-all
 - cjpeg-dssim jpegoptim
 
