@@ -22,7 +22,7 @@ class: content-centered
   ![Transfer payload](./img/TotalSize.png)
   ![Image payload](./img/ImgSize.png)
 ]
-- ![Source](http://httparchive.org/trends.php?s=All&minlabel=Jun+1+2011&maxlabel=Apr+1+2015#bytesImg&reqImg)
+[source](http://httparchive.org/trends.php?s=All&minlabel=Jun+1+2011&maxlabel=Apr+1+2015#bytesImg&reqImg)
 
 ---
 class: content-centered
@@ -58,22 +58,33 @@ class: content-centered
 # Une combinaison de méthodes
 
 - Compression sans perte (*lossless*)
+
+    Techniques issues de la théorie de l'information (Shannon, 1948)
+
+    Algèbre linéaire
+
+- Compression avec perte (*lossy*)
+
+    Techniques psychovisuelles
+    
+    Quantification
+
+---
+class: content-centered
+# Test 
+- Changement d'unités
+- Faiblesse de l'œil humain
+- Zip classique
+- Recherche de redondances
 -- Techniques issues de la théorie de l'information (Shannon, 1948)
 --- Huffman Coding
 --- Differential coding
 -- Techniques d'algèbre linéaire
 --- Karhunen Loève Transform (KLT)
 --- Discrete Cosine Transform
-- Compression avec perte (*lossy*)
 -- Techniques psychovisuelles
 --- RGB --> YCrCb
 --- Quantification empirique
-
-
-- Changement d'unités
-- Faiblesse de l'œil humain
-- Zip classique
-- Recherche de redondances
 
 ---
 class: content-centered
