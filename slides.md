@@ -17,12 +17,12 @@ class: content-centered
 
 ---
 class: content-centered
-# More than half of the page payload today
-.center[
-  ![Transfer payload](./img/TotalSize.png)
-  ![Image payload](./img/ImgSize.png)
+# Images : >50% du payload
+.column-right[
+  ![Image payload](./img/img_to_transfer_size.png)
+
+  [source](http://httparchive.org/trends.php?s=All&minlabel=Jun+1+2011&maxlabel=Apr+1+2015#bytesImg&reqImg)
 ]
-[source](http://httparchive.org/trends.php?s=All&minlabel=Jun+1+2011&maxlabel=Apr+1+2015#bytesImg&reqImg)
 
 ---
 class: content-centered
@@ -57,17 +57,13 @@ class: content-centered
 class: content-centered
 # Une combinaison de méthodes
 
-- Compression sans perte (*lossless*)
+### Compression sans perte (lossless)
+- Techniques issues de la théorie de l'information 
+- Algèbre linéaire
 
-    Techniques issues de la théorie de l'information (Shannon, 1948)
-
-    Algèbre linéaire
-
-- Compression avec perte (*lossy*)
-
-    Techniques psychovisuelles
-    
-    Quantification
+### Compression avec perte (lossy)
+- Techniques psychovisuelles
+- Quantification
 
 ---
 class: content-centered
@@ -122,12 +118,30 @@ class: content-centered
  
 
 - Pixels contigus similaires
+- 8x8 c'est petit
+- Chaque pixel est quasi-identique à son voisin
+- Aplats de couleur fréquents sur les photos
+- Chaque bloc a une teinte dominante
+- Redondance de teinte entre les blocs voisins
+- Bon compromis de taille entre localité et performances [à l'époque](http://www.faqs.org/faqs/mpeg-faq/part3/)
+
 
 ---
 class: content-centered
-# RGB -> YCbCr
+## Encodage et décodage
 
-- Changement d'unité RGB -> YCbCr
+.center[
+  ![Diagramme de flux](./img/500px-JPEG_process.svg.png)
+]
+
+- Temps de traitement et Optimisations sur l'encodeur
+- Décodeur plutôt rapide et standardisé
+
+---
+class: content-centered
+# RGB ➔ YCbCr
+
+- Changement d'unité RGB ➔ YCbCr
 - Lossless
 - Deux couleurs proches
   - R + G + B changent
@@ -150,7 +164,7 @@ de teinte ?
 
 ---
 class: content-centered
-# DCT
+# Discrete Cosine Tranform
 
 - Sur un bloc complet
 - Dur à expliquer, partie la plus couteuse en CPU
@@ -161,6 +175,18 @@ class: content-centered
 - Quasi-lossless (arrondis)
 
 ![DCT](./img/dctjpeg.png)
+
+---
+class: content-centered
+# DCT côté maths
+
+- Proche de la Discrete Fourier Transform
+    
+    facile à implémenter abutterfly algorithms
+- DCT de type II (propriétés de symétries par extension)
+- Bonne approximation de la Karhunen-Loève Transform (ACP)
+    pour les processus markovien d'ordre 1
+
 
 ---
 class: content-centered
@@ -318,6 +344,7 @@ class: content-centered
 http://www.impulseadventure.com/photo/jpeg-compression.html
 http://fr.wikipedia.org/wiki/JPEG#D.C3.A9coupage_en_blocs
 http://fr.wikipedia.org/wiki/Codage_de_Huffman
+http://en.wikipedia.org/wiki/File:JPEG_process.svg
 http://www.ams.org/samplings/feature-column/fcarc-image-compression
 http://upload.wikimedia.org/wikipedia/commons/2/23/Dctjpeg.png
 
