@@ -138,7 +138,7 @@ class: content-centered
 - Lossless
 - Deux couleurs proches
   - R + G + B changent
-  - Seul Y change. G et B restent identiques ou très proches.
+  - Seul Y change. Cb/Cr restent identiques ou très proches.
 - Redondance Cb/Cr.
 
 // TODO: Exemples de couleurs proches avec équivalents RGB et équivalents YCbCR
