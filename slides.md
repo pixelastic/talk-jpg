@@ -67,57 +67,29 @@ class: content-centered
 
 ---
 class: content-centered
-# Test 
-- Changement d'unités
-- Faiblesse de l'œil humain
-- Zip classique
-- Recherche de redondances
--- Techniques issues de la théorie de l'information (Shannon, 1948)
---- Huffman Coding
---- Differential coding
--- Techniques d'algèbre linéaire
---- Karhunen Loève Transform (KLT)
---- Discrete Cosine Transform
--- Techniques psychovisuelles
---- RGB --> YCrCb
---- Quantification empirique
-
----
-class: content-centered
 # Division par blocs de 8x8
 
 .center[
   ![Blocs 8x8](./img/example-400-grid.jpg)
 ]
 
- 
-
-- Compression sur chaque bloc
+- Compression par bloc de 64 pixels (Minimum Coded Unut)
 - Artefacts visibles à l'œil nu
+- Chaque MCU est considérée comme un vecteur de taille 64 ordonné en zig-zag
 
 ---
 class: content-centered
 # Division par blocs de 8x8
-
-.center[
+.column-left[
   ![Zoom](./img/example-blocks-zoom.jpg)
 ]
-
- 
-
-- Teinte dominante par bloc
-
----
-class: content-centered
-# Division par blocs de 8x8
-
-.center[
-  ![Zoom](./img/example-block-zoom.jpg)
+.column-right[
+  ![Un bloc](./img/240px-JPEG_ZigZag.svg.png)
 ]
 
 - 8x8 c'est petit avec les résolutions actuelles
 - Redondance de teinte entre les blocs voisins
-- [Bon compromis](http://www.faqs.org/faqs/mpeg-faq/part3/) de taille entre localité et performances [à l'époque]
+- [Bon compromis](http://www.faqs.org/faqs/mpeg-faq/part3/) de taille entre localité et performances (à l'époque)
 
 ---
 class: content-centered
@@ -127,64 +99,76 @@ class: content-centered
   ![Diagramme de flux](./img/500px-JPEG_process.svg.png)
 ]
 
-- Temps de traitement et Optimisations sur l'encodeur
+- Temps de traitement et optimisations sur l'encodeur
 - Décodeur plutôt rapide et standardisé
 
 ---
 class: content-centered
-# RGB ➔ YCbCr
+# Changement de perspective
+.center[
+  ![Example YCbCr](./img/example-YCbCr.png)
+]
 
-- Changement d'unité RGB ➔ YCbCr
-- Lossless
-- Deux couleurs proches
-  - R + G + B changent
-  - Seul Y change. Cb/Cr restent identiques ou très proches.
-- Redondance Cb/Cr.
-
-// TODO: Exemples de couleurs proches avec équivalents RGB et équivalents YCbCR
-
----
-class: content-centered
-# Subsampling
-
-- Pixels cote-à-cote, même Cb/Cr
-- Merger les pixels. 2 par 2, 4 par 4, par ligne, par colonne
-- Moins de valeurs à stocker
-- Lossy
-
-// Example d'une même image subsamplée différemment pour montrer la différence
-de teinte ?
+- **RGB ➔ YCbCr** (Luminance et chrominance)
+- Changement de base dans l'espace vectoriel des MCU
+- Lossless (tant qu'on arrondit pas)
+- L'œil humain est bien plus sensible à la luminance 
 
 ---
 class: content-centered
-# Discrete Cosine Tranform
+# Subsampling en chrominance
+.center[
+  ![Chroma Subsampling](./img/Chroma Subsampling.png)
+]
 
-- Sur un bloc complet
-- Dur à expliquer, partie la plus couteuse en CPU
-- Changement d'unité
-- 64 pixels deviennent une somme de 64 vecteurs
-- Chaque vecteur est coefficienté
-- Chaque bloc possède donc un hash unique
-- Quasi-lossless (arrondis)
+- Reduction de la chrominance moins bien perçue par l'œil humain
+- Méthode lossy du [chroma subsampling](http://en.wikipedia.org/wiki/Chroma_subsampling)
+- Symboles abscons (4:4:4, 4:2:2, 4:4:0...) connus aussi en vidéo
 
-![DCT](./img/dctjpeg.png)
+---
+class: content-centered
+# Discrete Cosine Transform
+
+.column-left[
+- Sur chaque composant (Y, Cb, Cr) de chaque MCU
+- Dur à expliquer, partie la plus coûteuse en CPU
+- Permet de décomposer sur une base de fréquences spatiales
+]
+.column-right[
+![DCT](./img/300px_dctjpeg.png)
+]
 
 ---
 class: content-centered
 # DCT côté maths
+.column-right[
+ ![DCT butterfly](./img/300_4x4_DCT_butterfly.png)
+]
 
-- Proche de la Discrete Fourier Transform
-    
-    facile à implémenter abutterfly algorithms
-- DCT de type II (propriétés de symétries par extension)
-- Bonne approximation de la Karhunen-Loève Transform (ACP)
-    pour les processus markovien d'ordre 1
 
+- Proche de la Discrete Fourier Transform (connu et optimisé)
+- Bonne approximation de la [Karhunen-Loève Transform](http://en.wikipedia.org/wiki/Karhunen%E2%80%93Lo%C3%A8ve_theorem) ou ACP
+- Pour les processus markoviens stationnaires d'ordre 1
+  ![1st order Markov process](./img/400_1st_order_markov_process.png)
+- Adapté aux variations faibles d'une MCU à l'autre
+
+---
+class: content-centered
+# Propriétés de l'ACP 
+
+.column-right[
+![Energy compaction examples](./img/480-energy_compaction.png)
+]
+- décomposition en variables aléatoires décorrélées
+- compaction d'énergie sur des signaux réels ➔ suppression des hautes fréquences 
+
+[*source*](http://www.ee.columbia.edu/~xlx/ee4830/)
 
 ---
 class: content-centered
 # Quantification
 
+- C'est juste un arrondi 
 - Premiers vecteurs plus forts
 - Derniers vecteurs plus faibles
 - Suppression des faibles
@@ -334,6 +318,23 @@ class: content-centered
 
 - jpegoptim -m80 --strip-all
 - cjpeg-dssim jpegoptim
+
+---
+class: content-centered
+# Le futur du JPEG ?
+- Les successeurs : JPEG 2000 (so last century), wavelets compression, multiresolution tiling...
+
+- Le JPEG est largement suffisant
+- Le gain des méthodes plus avancées est trop faible
+- Ouvert et gratuit (les brevets sont valables 20 ans)
+
+---
+class: content-centered
+# Good is enough
+
+- Côté vidéo le besoin a encouragé les avancées (H.264, H.265)
+- Les principaux gains liés à notre perception ont majoritairement été exploités (audio, vidéo, image...)
+- DVD Audio, HD audio, 4K sont souvent plutôt des besoins marketing que véritablement avérés
 
 ---
 ## Sources
