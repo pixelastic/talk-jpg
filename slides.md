@@ -1,12 +1,12 @@
 class: full-page, slide-intro
-# Anatomie d'un JPG
+# Autopsie d'un JPG
 ---
 class: content-centered
 # Pourquoi parler de JPEG ?
-- la Web perf est un sujet d'actualité
+- la web perf est un sujet d'actualité
 - le JPEG est massivement utilisé
 - ... bien qu'il date du début des années 90
-- ... et qu'il est parfois incompris ou mal utilisé
+- ... et qu'il est parfois incompris ou mal réglé
 ---
 class: content-centered
 # JPEG : historique
@@ -184,35 +184,44 @@ class: content-centered
 - La perception de l'œil humain privilégie les basses fréquences
 - Une table de quantification par composant (Y, Cb, Cr) stockée dans le fichier
 - Des tables déduites empiriquement sont fournies par le standard
-- La qualité des encodeurs multiplie ces tables par une constante
+- Le réglage qualité multiplie ces tables par une constante dépendant de l'encodeur
 
 ---
 class: content-centered
-# Techniques de compression
-
+# Techniques de compression lossless
+.center[
+![Entropy](./img/entropy.png)
+]
 - Compression des zéros dans les hautes fréquences ([RLE](http://en.wikipedia.org/wiki/Run-length_encoding))
 - [DPCM](http://en.wikipedia.org/wiki/Differential_pulse-code_modulation) sur la moyenne (DC) de chaque MCU
-- Encodage de Huffman
----
-class: content-centered
-# Fin du bloc
-
-- 64px en rgb
-- 64px en YCbCr
-- Subsampling, merging de pixels
-- Somme de vecteurs
-- Quantization (œil humain)
-- Compression de zeros
-
-Pour chaque bloc.
+- Encodage de [Huffman](http://en.wikipedia.org/wiki/Huffman_coding) : optimal pour des données iid si le dictionnaire est déduit de l'image
+- Des dictionnaires génériques sont fournis par le standard
 
 ---
 class: content-centered
-# Huffman coding
+# Récapitulatif
 
-- Image complete
-- Recherche de redondance
-- Compression par patterns, dictionnaire, symboles
+.column-right[
+  ![Diagramme de flux](./img/360px-JPEG_process.svg.png)
+]
+.column-left[
+- Subsampling chroma
+- Découpage en MCU (8x8)
+- Passage en DCT
+- Quantification
+- Compression lossless
+]
+### Et la décompression c'est à l'envers !
+
+---
+class: content-centered
+# JPEG progressif
+.center[
+![baseline vs. progressive](./img/01-02_baseline_vs_progressive.jpg)
+([source](http://sixrevisions.com/graphics-design/jpeg-101-a-crash-course-guide-on-jpeg/))
+]
+- Juste une question d'ordre d'écriture des MCU dans le fichier
+- Faites du progressif, sans hésitation !
 
 ---
 class: content-centered
@@ -221,7 +230,8 @@ class: content-centered
 ### Plusieurs leviers en baseline
 - Subsampling de CbCr
 - Optimisation des tables de quantification par rapport à l'image
-- Optimisation des tables de Huffman par rapport à l'image
+- Optimisation des dictionnaires de Huffman par rapport à l'image
+- Progressif
 
 ### Leviers pas toujours supportés
 - Compression arithmétique
@@ -240,26 +250,17 @@ class: content-centered
 
 ---
 class: content-centered
-# Les mauvaise idées
+# Les mauvaises idées
 .column-left[
-- Recompresser un JPEG ➔ cumuls d'erreurs d'arrondi
-- Compresser à la qualité maximum ➔ taille importante et erreurs d'arrondis
-- Utiliser une taille cible ➔ la taile dépend de la complexité de l'image
+- Compresser à la qualité maximum ➔ lossy quand même (arrondis)
+- Une taille pour toutes les images ➔  perte de qualité sur les images complexes
+- Zipper un JPEG ➔  ajout d'un header: augmente la taille
+- Compresser des images discontinues (texte) ➔ artefacts type [Gibbs](http://en.wikipedia.org/wiki/Gibbs_phenomenon)
 ]
 
 .column-right[
 ![Hmmm...Nah](./img/hmm_nah.jpg)
 ]
----
-class: content-centered
-# Conclusion
-
-- Image = Somme des blocs
-- Bloc = Somme des pixels
-- Reversible
-- Mix lossless et lossy
-- Implémentations différentes par outil
-- Lecture normale ou progressive
 
 ---
 class: full-page, slide-metadata
@@ -345,6 +346,9 @@ class: full-page, slide-tools
 class: content-centered
 # Outils
 
+.center[
+![Quality vs. PSNR](./img/mse_vs_mos.gif)
+]
 // TODO ajouter ces outils directement au fil de la présentation ?
 
 - jpegoptim -m80 --strip-all
@@ -352,21 +356,40 @@ class: content-centered
 
 ---
 class: content-centered
-# Rex
+# From the trenches
 
+- Boulimie de metadata (11% du poids du fichier)
+```shell
+File Size              : 117 kB
+Flash                  : Off, Did not fire
+Focal Length           : 50.0 mm
+Photoshop Thumbnail    : (Binary data 6959 bytes)
+History Action         : derived, saved, saved...
+History Software Agent : Adobe Photoshop Lightroom...
+Thumbnail Image        : (Binary data 6959 bytes)
+```
+---
+class: content-centered
+# From the trenches
+
+.center[
+  ![Qualité trop élevée](./img/exemple_qualite98.png)
+]
+- Qualité trop haute (~98/100 sous Gimp)
+- Taille écran 228x274px
+- 117ko ➔ 23ko (qualité 80/100)
 
 ---
 class: content-centered
 # Le futur du JPEG ?
 - Les successeurs : JPEG 2000 (so last century), wavelets compression, multiresolution tiling...
-
-- Le JPEG est largement suffisant
-- Le gain des méthodes plus avancées est trop faible
+- Le JPEG est largement suffisant dans la plupart des cas de diffusion
+- Le gain des méthodes plus avancées est trop faible (<15%, [source](http://www.elektronik.htw-aalen.de/packjpg/_notes/PCS2007_PJPG_paper_final.pdf))
 - Ouvert et gratuit (les brevets sont valables 20 ans)
 
 ---
 class: content-centered
-# Good is enough
+# Good is often enough
 
 - Côté vidéo le besoin a encouragé les avancées (H.264, H.265)
 - Les principaux gains liés à notre perception ont majoritairement été exploités (audio, vidéo, image...)
@@ -382,6 +405,7 @@ http://en.wikipedia.org/wiki/File:JPEG_process.svg
 http://www.ams.org/samplings/feature-column/fcarc-image-compression
 http://upload.wikimedia.org/wikipedia/commons/2/23/Dctjpeg.png
 http://en.wikipedia.org/wiki/Quantization_(image_processing)
+https://ece.uwaterloo.ca/~z70wang/research/ssim/
 
 Bec Brown : http://finda.photo/image/6954
 Taylor Swayze : http://finda.photo/image/8420
