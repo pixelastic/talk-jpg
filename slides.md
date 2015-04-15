@@ -7,6 +7,8 @@ class: content-centered
 - le JPEG est massivement utilisé
 - ... bien qu'il date du début des années 90
 - ... et qu'il est parfois incompris ou mal réglé
+- Un exemple simple de compression perceptuelle (images, audio, vidéo...)
+
 ---
 class: content-centered
 # JPEG : historique
