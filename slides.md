@@ -30,7 +30,7 @@ class: content-centered
 
 - Fonctionnement de la compression JPEG
 - Metadatas
-- Outils utiles
+- REX web perf & outils utiles
 
 ---
 class: content-centered
@@ -41,7 +41,7 @@ class: content-centered
 
 ---
 class: content-centered
-# Vision naïve
+# Vision naïve d'une image
 
 .center[
   ![Example 400x268](./img/example-400.jpg)
@@ -67,32 +67,6 @@ class: content-centered
 
 ---
 class: content-centered
-# Division par blocs de 8x8
-
-.center[
-  ![Blocs 8x8](./img/example-400-grid.jpg)
-]
-
-- Compression par bloc de 64 pixels (Minimum Coded Unit)
-- Artefacts visibles à l'œil nu
-- Chaque MCU est considérée comme un vecteur de taille 64 ordonné en zig-zag
-
----
-class: content-centered
-# Division par blocs de 8x8
-.column-left[
-  ![Zoom](./img/example-block-zoom.jpg)
-]
-.column-right[
-  ![Un bloc](./img/240px-JPEG_ZigZag.svg.png)
-]
-
-- 8x8 c'est petit avec les résolutions actuelles
-- Redondance de teinte entre les blocs voisins
-- [Bon compromis](http://www.faqs.org/faqs/mpeg-faq/part3/) de taille entre localité et performances (à l'époque)
-
----
-class: content-centered
 # Encodage et décodage
 
 .center[
@@ -101,6 +75,32 @@ class: content-centered
 
 - Temps de traitement et optimisations sur l'encodeur
 - Décodeur plutôt rapide et standardisé
+
+
+---
+class: content-centered
+# Division par blocs de 8x8
+
+.center[
+  ![Blocs 8x8](./img/example-400-grid.jpg)
+]
+
+- Compression par bloc de 64 pixels (Minimum Coded Unit)
+- Artefacts visibles à l'œil nu
+- [Bon compromis](http://www.faqs.org/faqs/mpeg-faq/part3/) de taille entre localité et performances (à l'époque)
+
+---
+class: content-centered
+# Zoom sur un bloc 8x8
+.column-left[
+![Zoom](./img/example-block-zoom.jpg)
+]
+.column-right[
+![Un bloc](./img/320px-JPEG_ZigZag.svg.png)
+]
+
+- 8x8 c'est petit, surtout pour les résolutions actuelles
+- Chaque MCU est considérée comme un vecteur de taille 64 ordonné en zig-zag
 
 ---
 class: content-centered
@@ -145,7 +145,6 @@ class: content-centered
  ![DCT butterfly](./img/300_4x4_DCT_butterfly.png)
 ]
 
-
 - Proche de la Discrete Fourier Transform (connu et optimisé)
 - Bonne approximation de la [Karhunen-Loève Transform](http://en.wikipedia.org/wiki/Karhunen%E2%80%93Lo%C3%A8ve_theorem) ou ACP
 - Pour les processus markoviens stationnaires d'ordre 1
@@ -159,32 +158,41 @@ class: content-centered
 .column-right[
 ![Energy compaction examples](./img/480-energy_compaction.png)
 ]
-- décomposition en variables aléatoires décorrélées
-- compaction d'énergie sur des signaux réels ➔ suppression des hautes fréquences 
+- Décomposition en variables aléatoires décorrélées
+- Compaction d'énergie sur des signaux réels ➔ beaucoup d'information sur peu de coordonnées
 
 [*source*](http://www.ee.columbia.edu/~xlx/ee4830/)
 
 ---
 class: content-centered
 # Quantification
-
-- C'est juste un arrondi 
-- Premiers vecteurs plus forts
-- Derniers vecteurs plus faibles
-- Suppression des faibles
-- Suppression de ceux jugés (empiriquement) inutile
-- Table de quantification différentes selon les algos
-- Table stockée dans le JPG
-- Lossy
+.center[
+![Erreur de quantification](./img/Quanterr.png)
+]
+- C'est juste un arrondi avec un pas (diviseur) donné
+- L'approximation est irrécupérable (lossy)
+- L'opération est appliquée pour chaque coefficient de la décomposition en DCT
 
 ---
 class: content-centered
-# Compression des zéros
+# Quantification adaptative
+.center[
+![Matrice de quantification](./img/quantization-matrix.png)
+]
 
-- Vecteurs supprimés = coefficient à zero
-- Redondance de zero
-- Encode le nombre de zeros pour gagner de la place
 
+- La perception de l'œil humain privilégie les basses fréquences
+- Une table de quantification par composant (Y, Cb, Cr) stockée dans le fichier
+- Des tables déduites empiriquement sont fournies par le standard
+- La qualité des encodeurs multiplie ces tables par une constante
+
+---
+class: content-centered
+# Techniques de compression
+
+- Compression des zéros dans les hautes fréquences ([RLE](http://en.wikipedia.org/wiki/Run-length_encoding))
+- [DPCM](http://en.wikipedia.org/wiki/Differential_pulse-code_modulation) sur la moyenne (DC) de chaque MCU
+- Encodage de Huffman
 ---
 class: content-centered
 # Fin du bloc
@@ -200,25 +208,48 @@ Pour chaque bloc.
 
 ---
 class: content-centered
-# Blocs proches
-
-.center[
-  ![Zoom](./img/example-blocks-zoom.jpg)
-]
-
-- 8x8 c'est petit
-- Blocs proches ont une teinte proche
-- On définit le vecteur principal d'un bloc par le delta par rapport au bloc
-  précédent
-
----
-class: content-centered
-# Huffmann coding
+# Huffman coding
 
 - Image complete
 - Recherche de redondance
 - Compression par patterns, dictionnaire, symboles
 
+---
+class: content-centered
+# Optimisations et tuning
+
+### Plusieurs leviers en baseline
+- Subsampling de CbCr
+- Optimisation des tables de quantification par rapport à l'image
+- Optimisation des tables de Huffman par rapport à l'image
+
+### Leviers pas toujours supportés
+- Compression arithmétique
+
+---
+class: content-centered
+# Les opérations lossless
+.center[
+![Upside down picture](./img/old_bg-intro_upside_down.jpg)
+]
+- Rotation ➔ réarrangement des MCU
+- Passage en progressif ➔ réarrangement de l'ordre des coefficients dans le fichier
+- Flou ➔ mise à zéro des hautes fréquences
+- Retaillage (multiple de 8x8) ➔ sélection de MCU
+- Optimisation de la taille du fichier ➔ recompression avec table de Huffman optimisée
+
+---
+class: content-centered
+# Les mauvaise idées
+.column-left[
+- Recompresser un JPEG ➔ cumuls d'erreurs d'arrondi
+- Compresser à la qualité maximum ➔ taille importante et erreurs d'arrondis
+- Utiliser une taille cible ➔ la taile dépend de la complexité de l'image
+]
+
+.column-right[
+![Hmmm...Nah](./img/hmm_nah.jpg)
+]
 ---
 class: content-centered
 # Conclusion
@@ -321,6 +352,11 @@ class: content-centered
 
 ---
 class: content-centered
+# Rex
+
+
+---
+class: content-centered
 # Le futur du JPEG ?
 - Les successeurs : JPEG 2000 (so last century), wavelets compression, multiresolution tiling...
 
@@ -345,6 +381,7 @@ http://fr.wikipedia.org/wiki/Codage_de_Huffman
 http://en.wikipedia.org/wiki/File:JPEG_process.svg
 http://www.ams.org/samplings/feature-column/fcarc-image-compression
 http://upload.wikimedia.org/wikipedia/commons/2/23/Dctjpeg.png
+http://en.wikipedia.org/wiki/Quantization_(image_processing)
 
 Bec Brown : http://finda.photo/image/6954
 Taylor Swayze : http://finda.photo/image/8420
