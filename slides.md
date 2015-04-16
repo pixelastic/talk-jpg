@@ -383,7 +383,7 @@ class: content-centered
 ![Quality vs. PSNR](./img/mse_vs_mos.gif)
 ]
 
-- jpegoptim -m80 --strip-all
+- jpegoptim -m85 --strip-all
 - cjpeg-dssim jpegoptim
 
 ---
