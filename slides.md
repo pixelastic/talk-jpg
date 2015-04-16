@@ -12,7 +12,7 @@ class: content-centered
 ---
 class: content-centered
 # JPEG : historique
-- **J**oint **P**hotographic **E**xperts **G**roup produced the standard *Information technology – Digital compression and coding of continuous-tone still images*
+- **J**oint **P**hotographic **E**xperts **G**roup a créé le standard *Information technology – Digital compression and coding of continuous-tone still images*
 - Le groupe a démarré 1986, le standard a été publié en 1992 (apprové par l'ISO et l'ITU)
 - Méthode de compression d'image
 - Format de fichier associé : **J**peg **F**ile **I**nterchange **F**ormat (JFIF)
@@ -101,6 +101,8 @@ class: content-centered
 ![Un bloc](./img/320px-JPEG_ZigZag.svg.png)
 ]
 
+ 
+
 - 8x8 c'est petit, surtout pour les résolutions actuelles
 - Chaque MCU est considérée comme un vecteur de taille 64 ordonné en zig-zag
 
@@ -113,7 +115,7 @@ class: content-centered
 
 - **RGB ➔ YCbCr** (Luminance et chrominance)
 - Changement de base dans l'espace vectoriel des MCU
-- Lossless (tant qu'on arrondit pas)
+- Lossless (tant qu'on n'arrondit pas)
 - L'œil humain est bien plus sensible à la luminance 
 
 ---
@@ -192,7 +194,7 @@ class: content-centered
 class: content-centered
 # Techniques de compression lossless
 .center[
-![Entropy](./img/entropy.png)
+![Entropy](./img/Entropy.png)
 ]
 - Compression des zéros dans les hautes fréquences ([RLE](http://en.wikipedia.org/wiki/Run-length_encoding))
 - [DPCM](http://en.wikipedia.org/wiki/Differential_pulse-code_modulation) sur la moyenne (DC) de chaque MCU
@@ -270,11 +272,40 @@ class: full-page, slide-metadata
 
 ---
 class: content-centered
+# Exiftool
+
+```sh
+$ exiftool picture.jpg
+```
+
+```sh
+File Size                       : 494 kB
+Image Size                      : 1920x1265
+File Type                       : JPEG
+MIME Type                       : image/jpeg
+Exif Byte Order                 : Little-endian (Intel, II)
+XMP Toolkit                     : Adobe XMP Core 5.3-c011 66.145661
+Original Document ID            : xmp.did:999DEC701EB0E311801EFDD03E7C1154
+Document ID                     : xmp.did:6C302F067BD111E4A0FFFBC0293A508B
+Instance ID                     : xmp.iid:6C302F057BD111E4A0FFFBC0293A508B
+Creator Tool                    : Adobe Photoshop CS6 (Windows)
+Derived From Instance ID        : xmp.iid:25D692D731CB11E4BB03A7E70526CA15
+Derived From Document ID        : xmp.did:25D692D831CB11E4BB03A7E70526CA15
+DCT Encode Version              : 100
+APP14 Flags 0                   : [14], Encoded with Blend=1 downsampling
+APP14 Flags 1                   : (none)
+Color Transform                 : YCbCr
+Encoding Process                : Baseline DCT, Huffman coding
+Bits Per Sample                 : 8
+Color Components                : 3
+Y Cb Cr Sub Sampling            : YCbCr4:4:4 (1 1)
+```
+
+---
+class: content-centered
 # Trois formats
 
-// TODO : un output d'exiftool
-
-- Exif
+- EXIF
 - IPTC
 - XMP
 
@@ -331,8 +362,8 @@ class: content-centered
 class: content-centered
 # Compression
 
-- Suppression aggressive
-- Garder auteur, license
+- Sur le web, on supprime tout
+- ... sauf l'auteur et la license
 
  
 
@@ -351,16 +382,29 @@ class: content-centered
 .center[
 ![Quality vs. PSNR](./img/mse_vs_mos.gif)
 ]
-// TODO ajouter ces outils directement au fil de la présentation ?
 
 - jpegoptim -m80 --strip-all
 - cjpeg-dssim jpegoptim
 
 ---
 class: content-centered
+
+.thumbnails[
+- ![Compression](./img/jpg-lossy-90.jpg) `-m90, 342Ko, 0.000528`
+- ![Compression](./img/jpg-lossy-80.jpg) `-m80, 219Ko, 0.001259`
+- ![Compression](./img/jpg-lossy-70.jpg) `-m70, 172Ko, 0.002076`
+- ![Compression](./img/jpg-lossy-60.jpg) `-m60, 141Ko, 0.003032`
+- ![Compression](./img/jpg-lossy-50.jpg) `-m50, 121Ko, 0.003785`
+- ![Compression](./img/jpg-lossy-40.jpg) `-m40, 104Ko, 0.005191`
+- ![Compression](./img/jpg-lossy-30.jpg) `-m30, 86Ko, 0.007569`
+- ![Compression](./img/jpg-lossy-20.jpg) `-m20, 64Ko, 0.013038`
+- ![Compression](./img/jpg-lossy-10.jpg) `-m10, 38Ko, 0.034276`
+]
+
+---
+class: content-centered
 # From the trenches
 
-- Boulimie de metadata (11% du poids du fichier)
 ```shell
 File Size              : 117 kB
 Flash                  : Off, Did not fire
@@ -370,6 +414,9 @@ History Action         : derived, saved, saved...
 History Software Agent : Adobe Photoshop Lightroom...
 Thumbnail Image        : (Binary data 6959 bytes)
 ```
+
+- Boulimie de metadata (11% du poids du fichier)
+
 ---
 class: content-centered
 # From the trenches

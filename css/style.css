@@ -102,3 +102,27 @@ li {
   background-position:top left !important;
   background-size:100% 100% !important;
 }
+
+/* Dssim */
+.thumbnails ul {
+  list-style:none;
+  overflow:hidden;
+  margin-top:-30px;
+  width:100%;
+}
+.thumbnails li {
+  display:inline-block;
+  width:250px;
+  font-size:0.6em;
+  text-align:center;
+}
+.thumbnails li img {
+  width:250px;
+}
+.thumbnails li code {
+  display:inline-block;
+  width:100%;
+  padding:.25em 0;
+
+}
+
