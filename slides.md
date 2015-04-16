@@ -380,7 +380,7 @@ class: content-centered
 # Outils
 
 .center[
-![Quality vs. PSNR](./img/mse_vs_mos.gif)
+![Quality SSIM](./img/jpeg_quality_ssim.png)
 ]
 
 - jpegoptim -m85 --strip-all
