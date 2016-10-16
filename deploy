@@ -8,4 +8,4 @@ rsync \
   --prune-empty-dirs \
   --compress \
   ./css ./fonts ./img ./js ./index.html \
-  pixelastic:/var/www/pixelastic.com/talks.pixelastic.com/dist/jpg-octo-bof
+  pixelastic:/var/www/pixelastic.com/talks.pixelastic.com/slides/jpg-octo-bof
